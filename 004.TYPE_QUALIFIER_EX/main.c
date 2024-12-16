@@ -2,6 +2,8 @@
 
 #if 0
 
+// 컴파일러의존성을 없애야 하기떄문에 int-> volatile unsigned long로 바꿔줘야함
+// 주변장치는 반드시 volatile unsigned 를 선언 해 주어야 함
 #define RCC_APB2ENR   (*(unsigned long*)0x40021018)
 
 #define GPIOB_CRH      (*(volatile unsigned long*)0x40010C04)
@@ -19,9 +21,9 @@ void Main(void)
 
 	for(;;)
 	{
-		GPIOB_ODR = 0x0 << 8;
+		GPIOB_ODR = 0x0 << 8;	// LED0, LED1 ON
 		for(i=0; i<0x40000; i++);
-		GPIOB_ODR = 0x3 << 8;
+		GPIOB_ODR = 0x3 << 8;	// LED0, LED1 OFF
 		for(i=0; i<0x40000; i++);
 	}
 }

@@ -10954,7 +10954,7 @@ Disassembly of section .debug_line:
   30:	242a325c 	strtcs	r3, [sl], #-604	; 0xfffffda4
   34:	322e7803 	eorcc	r7, lr, #196608	; 0x30000
   38:	2e780332 	mrccs	3, 3, r0, cr8, cr2, {1}
-  3c:	02212424 	eoreq	r2, r1, #36, 8	; 0x24000000
+  3c:	02242424 	eoreq	r2, r4, #36, 8	; 0x24000000
   40:	01010002 	tsteq	r1, r2
   44:	00000044 	andeq	r0, r0, r4, asr #32
   48:	00200002 	eoreq	r0, r0, r2

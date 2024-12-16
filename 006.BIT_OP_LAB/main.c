@@ -5,8 +5,18 @@
 void Main(void)
 {
 	RCC->APB2ENR |= (1<<3);
-
+	
+	// LED0, LED1 General Output으로 설정
+	// CNF1,CNF0	-> Open-drain
+	//  0	 1
+	// MODE1,MODE2	-> output speed 2MHz(LED는 출력속도가 낮아도 됨)
+	//  1	 0
+	// GPIOB_CRH -> 0110 0110
 	GPIOB->CRH = 0x66 << 0;
+
+	// LED0, LED1 ON,OFF 설정
+	// LED0, LED1 -> 0이면 ON / 1이면 OFF
+	// LED0-> PB8, LED1->PB9 / 0x1<<8 -> LED0 ON, LED1 OFF 설정정
 	GPIOB->ODR = 0x1 << 8;
 }
 
@@ -20,14 +30,20 @@ void Main(void)
 	RCC->APB2ENR |= (1<<3);
 
 	/* 비트 연산을 이용하여 LED0을 ON, LED1을 OFF로 하는 코드를 설계하시오 */
+
+	// (GPIOB->CRH &~(0xff<<0)) -> 0번째bit부터 8bit를 0으로 변경 (&~) (CRH[8:0])
+	// | (0x66<<0) 				-> 0으로 변경한 8bit 공간을 0110 0110 으로 변경
 	GPIOB->CRH = (GPIOB->CRH &~(0xff<<0)) | (0x66<<0); 
+
+	// (GPIOB->ODR &~(0x3<<8))	-> 8번째bit부터 2bit를 0으로 변경 (ODR[9:8])
+	// | (0x2<<8)				-> 0으로 변경한 2bit 공간을 10 으로 변경
+	//LED0 ON / LED1 OFF
 	GPIOB->ODR = (GPIOB->ODR &~(0x3<<8)) | (0x2<<8);
-
-
-
 }
 
 #endif
+
+
 
 /* Bit 연산 Macro 활용 */
 
@@ -47,9 +63,10 @@ void Main(void)
 
 #endif
 
+
 /* Bit 연산 Macro 활용 LED Toggling */
 
-#if 1
+#if 0
 
 void Main(void)
 {
