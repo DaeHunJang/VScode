@@ -976,6 +976,7 @@ void Main(void)
  800329e:	f2c4 0301 	movt	r3, #16385	; 0x4001
  80032a2:	d5f8      	bpl.n	8003296 <Main+0x2a>
 		}
+		// while (Macro_Check_Bit_Clear(USART1->SR,5)); -->while문 안에 원하는 조건에 부정
 		char data = USART1->DR;
  80032a4:	8898      	ldrh	r0, [r3, #4]
  80032a6:	b280      	uxth	r0, r0
@@ -12111,7 +12112,7 @@ Disassembly of section .debug_info:
      d7c:	0000002c 	andeq	r0, r0, ip, lsr #32
      d80:	000001e1 	andeq	r0, r0, r1, ror #3
      d84:	00041c12 	andeq	r1, r4, r2, lsl ip
-     d88:	5d170100 	ldfpls	f0, [r7, #-0]
+     d88:	5d180100 	ldfpls	f0, [r8, #-0]
      d8c:	01000001 	tsteq	r0, r1
      d90:	8e130050 	mrchi	0, 0, r0, cr3, cr0, {2}
      d94:	2c080032 	stccs	0, cr0, [r8], {50}	; 0x32
@@ -13290,7 +13291,7 @@ Disassembly of section .debug_line:
  388:	010b0308 	tsteq	fp, r8, lsl #6
  38c:	2f207903 	svccs	0x00207903
  390:	6d344b2f 	fldmdbxvs	r4!, {d4-d26}	;@ Deprecated
- 394:	2f7631ae 	svccs	0x007631ae
+ 394:	2f7631af 	svccs	0x007631af
  398:	01000102 	tsteq	r0, r2, lsl #2
  39c:	00005201 	andeq	r5, r0, r1, lsl #4
  3a0:	2e000200 	cdpcs	2, 0, cr0, cr0, cr0, {0}
