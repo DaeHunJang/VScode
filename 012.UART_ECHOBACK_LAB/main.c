@@ -16,7 +16,16 @@ void Main(void)
 	for(;;)
 	{
 		// 받은 글자를 다시 UART로 출력한다
-
-
+		for(;;)
+		{
+			if(Macro_Check_Bit_Set(USART1->SR,5)) break;
+		}
+		// while (Macro_Check_Bit_Clear(USART1->SR,5)); -->while문 안에 원하는 조건에 부정
+		char data = USART1->DR;
+		for(;;)
+		{
+			if(Macro_Check_Bit_Set(USART1->SR,7)) break;
+		}
+		USART1->DR = data;
 	}
 }

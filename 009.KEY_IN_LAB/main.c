@@ -51,7 +51,6 @@ void Main(void)
 
 }
 
-
 #endif
 
 /* Key에 의한 LED Toggling */
@@ -96,17 +95,17 @@ void Main(void)
 	Sys_Init();
 	Uart_Printf("KEY Input Toggling #1\n");
 	Macro_Set_Bit(RCC->APB2ENR, 3);
-	Macro_Write_Block(GPIOA->CRL,0xff,0x86,8);
-	Macro_Write_Block(GPIOA->ODR,0x3,0x2,2);
+	Macro_Write_Block(GPIOA->CRL, 0xff, 0x86, 8);
+	Macro_Write_Block(GPIOA->ODR, 0x3, 0x2, 2);
 
-	for(;;)
+	for (;;)
 	{
-		if((interlock !=0) && Macro_Check_Bit_Clear(GPIOA->IDR,3))
+		if ((interlock != 0) && Macro_Check_Bit_Clear(GPIOA->IDR, 3))
 		{
-			Macro_Invert_Bit(GPIOA->ODR,2);
+			Macro_Invert_Bit(GPIOA->ODR, 2);
 			interlock = 0;
 		}
-		else if ((interlock == 0) && Macro_Check_Bit_Set(GPIOA->IDR,3))
+		else if ((interlock == 0) && Macro_Check_Bit_Set(GPIOA->IDR, 3))
 		{
 			interlock = 1;
 		}

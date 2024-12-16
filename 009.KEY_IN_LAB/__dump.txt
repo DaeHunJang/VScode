@@ -11242,18 +11242,18 @@ Disassembly of section .debug_info:
      a68:	01000003 	tsteq	r0, r3
      a6c:	840c0103 	strhi	r0, [ip], #-259	; 0xfffffefd
      a70:	01000003 	tsteq	r0, r3
-     a74:	0031b85d 	eorseq	fp, r1, sp, asr r8
+     a74:	0031b85c 	eorseq	fp, r1, ip, asr r8
      a78:	00006e08 	andeq	r6, r0, r8, lsl #28
      a7c:	0f9c0100 	svceq	0x009c0100
      a80:	0d000002 	stceq	0, cr0, [r0, #-8]
      a84:	00000362 	andeq	r0, r0, r2, ror #6
-     a88:	00685f01 	rsbeq	r5, r8, r1, lsl #30
+     a88:	00685e01 	rsbeq	r5, r8, r1, lsl #28
      a8c:	03690000 	cmneq	r9, #0
      a90:	970e0000 	strls	r0, [lr, -r0]
      a94:	ba000001 	blt	aa0 <__RW_SIZE__+0x520>
      a98:	10080031 	andne	r0, r8, r1, lsr r0
      a9c:	01000000 	mrseq	r0, (UNDEF: 0)
-     aa0:	0001fb60 	andeq	pc, r1, r0, ror #22
+     aa0:	0001fb5f 	andeq	pc, r1, pc, asr fp	; <UNPREDICTABLE>
      aa4:	31be0f00 			; <UNDEFINED> instruction: 0x31be0f00
      aa8:	02200800 	eoreq	r0, r0, #0, 16
      aac:	c20f0000 	andgt	r0, pc, #0
@@ -12287,10 +12287,10 @@ Disassembly of section .debug_line:
  2c0:	0000682e 	andeq	r6, r0, lr, lsr #16
  2c4:	00000000 	andeq	r0, r0, r0
  2c8:	31b80205 			; <UNDEFINED> instruction: 0x31b80205
- 2cc:	dd030800 	stcle	8, cr0, [r3, #-0]
- 2d0:	a7030100 	strge	r0, [r3, -r0, lsl #2]
+ 2cc:	dc030800 	stcle	8, cr0, [r3], {-0}
+ 2d0:	a8030100 	stmdage	r3, {r8}
  2d4:	2f2f207f 	svccs	0x002f207f
- 2d8:	4a00da03 	bmi	36aec <__RW_SIZE__+0x3656c>
+ 2d8:	4a00d903 	bmi	366ec <__RW_SIZE__+0x3616c>
  2dc:	3d2d5967 	stccc	9, cr5, [sp, #-412]!	; 0xfffffe64
  2e0:	033c0a03 	teqeq	ip, #12288	; 0x3000
  2e4:	1b592076 	blne	16484c4 <__RW_SIZE__+0x1647f44>
