@@ -66,13 +66,15 @@ char Uart1_Get_Pressed(void)
 	// 글자가 입력이 되었으면 입력된 글자를 리턴
 
 	// 글자 입력이 없으면 0 리턴
-	if (Macro_Check_Bit_Set(USART1->SR, 5)) return USART1->DR;
+	if (Macro_Check_Bit_Set(USART1->SR, 5))
+		return USART1->DR;
 	return 0;
 }
 
 char Uart1_Get_Char(void)
 {
 	// 글자 입력이 없으면 무한 대기, 글자가 들어오면 받은 글자 리턴
-	while (!Macro_Check_Bit_Set(USART1->SR,5));
+	while (!Macro_Check_Bit_Set(USART1->SR, 5))
+		;
 	return USART1->DR;
 }

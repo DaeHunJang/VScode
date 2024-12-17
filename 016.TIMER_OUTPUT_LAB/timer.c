@@ -71,7 +71,7 @@ void TIM2_Delay(int time)
 	Macro_Set_Bit(TIM2->EGR,0);
 	Macro_Set_Bit(TIM2->DIER, 0);
 
-	for(i=0; i<(t/0xffffu); i++)
+	for(i=0; i<(t/0xffffu+1); i++)
 	{
 		Macro_Set_Bit(TIM2->EGR,0);
 		Macro_Clear_Bit(TIM2->SR, 0);
