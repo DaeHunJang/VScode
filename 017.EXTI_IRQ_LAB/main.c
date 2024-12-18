@@ -17,15 +17,19 @@ void Main(void)
 	Uart1_Printf("EXTI Test\n");
 
 	// AFIO, Port-B Clock Enable
-
+	RCC->APB2ENR |= (1<<3  | 1<<0);
 	// PB[7:6]을 입력으로 선언
-
-	// PB[7:6]을 EXTI 소스로 설정하고 Falling edge 선택, EXTI[7:6] 인터럽트 허용
-
+	Macro_Write_Block(GPIOB->CRL,0xff,0x88,24);
+	// PB[7:6]을 EXTI 소스로 설정하고 Falling edge 선택, pending clear , EXTI[7:6] 인터럽트 허용
+	Macro_Write_Block(AFIO->EXTICR[1],0xff,0x11,8);
+	Macro_Set_Area(EXTI->FTSR,0x3,6);
+	Macro_Clear_Area(EXTI->PR,0x3,6);
+	Macro_Set_Area(EXTI->IMR,0x3,6);
 	// EXTI[7:6] Pending Clear 및 NVIC의 인터럽트 Pending clear
-
+	Macro_Set_Area(EXTI->PR,0x3,6);
+	NVIC_ClearPendingIRQ(23);
 	// EXTI9_5 인터럽트 허용
-
+	NVIC_EnableIRQ(23);
 	for(;;)
 	{
 		LED_Display(1);
