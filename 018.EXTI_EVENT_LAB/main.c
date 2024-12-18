@@ -27,7 +27,7 @@ void Main(void)
 			Uart1_Printf("KEY=%d\n", Key_Value);
 			Key_Value = 0;
 		}
-
+		
 		LED_Display(1);
 		TIM2_Delay(500);
 		LED_Display(2);

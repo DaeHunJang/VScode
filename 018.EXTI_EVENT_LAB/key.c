@@ -52,22 +52,17 @@ void Key_ISR_Enable(int en)
 {
 	if(en)
 	{
-		// GPIO-B PortøÕ AFIO Clock Enable(RXX->APB2ENR)
+		Macro_Set_Bit(RCC->APB2ENR, 3);
+		Macro_Set_Bit(RCC->APB2ENR, 0);
+		Macro_Write_Block(GPIOB->CRL, 0xff, 0x44, 24);
 
-		// PB[7:6]¿ª ¿‘∑¬¿∏∑Œ º≥¡§(GPIOB->CRL)
+		Macro_Write_Block(AFIO->EXTICR[1], 0xff, 0x11, 8); // PB[7:6]ÏùÑ EXTI ÏÜåÏä§Î°ú ÏÑ§Ï†ï
+		EXTI->PR = 0x3 << 6;							   // pending clear
+		Macro_Set_Area(EXTI->FTSR, 0x3, 6);				   // Falling edge
+		Macro_Set_Area(EXTI->IMR, 0x3, 6);				   // EXTI[7:6] Ïù∏ÌÑ∞ÎüΩÌä∏ ÌóàÏö©
 
-		// PB[7:6]¿ª EXTI º“Ω∫∑Œ º≥¡§(AFIO->EXTICR[1])
-
-		// EXT[7:6]¿ª Falling Edge∑Œ º≥¡§(EXTI->FTSR)
-
-		// EXT[7:6] ¿Œ≈Õ∑¥∆Æ Pending Clear(EXTI->PR)
-
-		// IRQ #23 Pending Clear(CMSIS Function)
-
-		// EXT[7:6] ¿Œ≈Õ∑¥∆Æ «„øÎ(EXTI->IMR)
-
-		// IRQ #23 ¿Œ≈Õ∑¥∆Æ «„øÎ(CMSIS Function)
-
+		NVIC_ClearPendingIRQ(23);
+		NVIC_EnableIRQ(23);
 	}
 
 	else

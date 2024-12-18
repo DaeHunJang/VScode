@@ -477,13 +477,10 @@ void CAN_SCE_IRQHandler(void)
 void EXTI9_5_IRQHandler(void)
 {
   // EXTI Pending을 확인하여 눌린키의 번호를 UART로 출력한다
-  if(Macro_Check_Bit_Set(EXTI->PR,6) || Macro_Check_Bit_Set(EXTI->PR,7))
-  {
-    Uart_Printf("%x",Macro_Extract_Area(EXTI->PR,0x3,6));
-  }
-
+  Uart_Printf("%x",Macro_Extract_Area(EXTI->PR,0x3,6));
   // EXTI[7:6] pending 및 IRQ(EXTI9_5)의 pending clear
-  Macro_Set_Area(EXTI->PR,0x3,6);
+  //Macro_Set_Area(EXTI->PR,0x3,6);
+  EXTI->PR = 0x3<<6;
 	NVIC_ClearPendingIRQ(23);
 }
 

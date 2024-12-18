@@ -22,5 +22,3 @@ void LED_All_Off(void)
 	Macro_Set_Area(GPIOB->ODR, 0x3, 8);
 }
 
-
-

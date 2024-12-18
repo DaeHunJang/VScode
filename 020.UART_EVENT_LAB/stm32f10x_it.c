@@ -655,9 +655,9 @@ volatile int Uart1_Rx_Data = 0;
 void USART1_IRQHandler(void)
 {
 	// Data read from USART1->DR
-
+  Uart1_Rx_Data = USART1->DR;
 	// NVIC USART1 pending clear
-
+  NVIC_ClearPendingIRQ(37);
 	Uart1_Rx_In = 1;
 }
 

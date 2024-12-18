@@ -55,6 +55,7 @@ void Key_ISR_Enable(int en)
 		Macro_Set_Bit(RCC->APB2ENR,3);
 		Macro_Set_Bit(RCC->APB2ENR,0);
 
+
 		Macro_Write_Block(GPIOB->CRL,0xff,0x44,24);
 		Macro_Write_Block(AFIO->EXTICR[1],0xff,0x11,8);
 		Macro_Write_Block(EXTI->FTSR,0x3,0x3,6);
