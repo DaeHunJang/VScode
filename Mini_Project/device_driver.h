@@ -3,6 +3,7 @@
 #include "macro.h"
 #include "malloc.h"
 
+
 // Uart.c
 
 #define Uart_Init			Uart1_Init
@@ -17,6 +18,7 @@ extern void Uart1_Printf(char *fmt,...);
 extern char Uart1_Get_Char(void);
 extern char Uart1_Get_Pressed(void);
 extern void Uart1_RX_Interrupt_Enable(int en);
+extern void Uart1_EchoBack(void);
 
 // Led.c
 
@@ -58,3 +60,12 @@ extern void TIM4_Change_Value(int time);
 extern void TIM3_Out_Init(void);
 extern void TIM3_Out_Freq_Generation(unsigned short freq);
 extern void TIM3_Out_Stop(void);
+
+
+// Moter.c
+
+void device_init();
+void device_execute(char recevied_command);
+void Motor_Stop(void);
+void Motor_Forward(void);
+void Motor_Reserve(void);
