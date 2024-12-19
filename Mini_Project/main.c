@@ -1,11 +1,12 @@
-#include <stdio.h>
+#include "device_driver.h"
 
-void main(void)
+
+void Main(void)
 {
-    device_init();
+	device_init();
 
-    for(;;)
-    {
-        device_execute();
-    }
+	for(;;)
+	{
+		device_execute();
+	}
 }

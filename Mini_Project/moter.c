@@ -1,36 +1,41 @@
-#include <stdio.h>
-#include <moter.h>
+#include <device_driver.h>
 
-void moter_init()
+void device_init()
 {
-    //PA->clock ON
-    Macro_Set_Bit(RCC->APB2ENR, 2);
-
-    //PA1(EN), PA2(1A) ,PA3(2A) GPIO Output Set
-    Macro_Write_Block(GPIOA->CRL,0xfff,0x733,4); //PA1->General purpose / open-drain, PA2 ->General purpose / Push-pull, PA3 -> General purpose / Push-pull
+    Uart1_Init();
+    Clock_Init();
+    Macro_Set_Bit(RCC->APB2ENR, 2); // PortA Clock ON
 }
 
-
-void moter_execute()
+void device_execute()
 {
-
+    switch (Uart1_Get_Char)
+    {
+    case S:
+        break;
+    case F:
+        break;
+    case R:
+        break;
+    }
 }
 
-void moter_S()
+void Moter_Stop()
 {
-    Macro_Set_Bit(GPIOA->ODR,1);    //PA1 High
+    Macro_Set_Bit(GPIOA->ODR, 1);         // PA1(EN) -> High
+    Macro_Clear_Area(GPIOA->ODR, 0x3, 2); // PA2(1A),PA3(2A) -> Low
 }
 
-void moter_F()
+void Moter_Forward()
 {
-    Macro_Set_Bit(GPIOA->ODR,1);    //PA1 High
-    Macro_Set_Bit(GPIOA->ODR,2);    //PA2(1A) High
-    Macro_Clear_Bit(GPIOA->ODR,3);  //PA3(2A) Low
+    Macro_Set_Bit(GPIOA->ODR, 1);
+    Macro_Set_Bit(GPIOA->ODR, 2);   // PA2(1A) -> High
+    Macro_Clear_Bit(GPIOA->ODR, 3); // PA3(2A) -> Low
 }
 
-void moter_R()
+void Moter_Reserve()
 {
-    Macro_Set_Bit(GPIOA->ODR,1);    //PA1 High
-    Macro_Clear_Bit(GPIOA->ODR,2);    //PA2(1A) Low
-    Macro_Set_Bit(GPIOA->ODR,3);  //PA3(2A) High
+    Macro_Set_Bit(GPIOA->ODR, 1);
+    Macro_Clear_Bit(GPIOA->ODR, 2); // PA2(1A) -> Low
+    Macro_Set_Bit(GPIOA->ODR, 3);   // PA3(2A) -> High
 }
