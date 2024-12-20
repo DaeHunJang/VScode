@@ -7,7 +7,7 @@ static void Sys_Init(void)
 	Key_Poll_Init();
 	Uart_Init(115200);
 }
-
+#if 0
 void Main(void)
 {
 	volatile int i;
@@ -25,3 +25,24 @@ void Main(void)
 		for(i=0; i<0x400000; i++);
 	}
 }
+#endif
+
+#if 1
+void Main(void)
+{
+	volatile int i;
+
+	Sys_Init();
+	Uart_Printf("ADC Test\n");
+
+	Adc_Cds_Init();
+
+	for(;;)
+	{
+		Cds_start();
+		while(!Cds_Get_Status());
+		Uart1_Printf("0x%.3X\n", Cdc_Get_Data());
+		for(i=0; i<0x400000; i++);
+	}
+}
+#endif

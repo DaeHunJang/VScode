@@ -45,3 +45,7 @@ extern int Adc_Get_Status(void);
 extern int Adc_Get_Data(void);
 
 
+void Cds_start(void);
+void Cds_Stop(void);
+int Cdc_Get_Data(void);
+int Cds_Get_Status(void);

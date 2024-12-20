@@ -69,3 +69,14 @@ void device_execute(char command, int speed);
 void Motor_Stop(void);
 void Motor_Forward(int speed);
 void Motor_Reserve(int speed);
+
+
+// i2c.c
+
+#define IODIR			0x0A
+#define IOSTATE			0x0B
+
+extern void I2C_Init(unsigned int freq);
+extern void I2C_Write_Reg(unsigned int addr, unsigned int data);
+extern void I2C_Config_GPIO(unsigned int config);
+extern void I2C_Write_GPIO(unsigned int data);

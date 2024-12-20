@@ -8,6 +8,7 @@ void device_init()
     Uart1_Init(115200);
     Uart1_RX_Interrupt_Enable(1);
     Clock_Init();
+
     SCB->VTOR = 0x08003000;
     SCB->SHCSR = 0;
 
@@ -26,6 +27,10 @@ void device_init()
     Macro_Set_Bit(RCC->APB2ENR, 2);
     // PA1(EN),PA2(1A),PA3(2A) ->General Purpose Output Push-Pull
     Macro_Write_Block(GPIOA->CRL, 0xff, 0xBB, 8);
+
+    //I2C init
+    I2C_Init(5000);
+	I2C_Config_GPIO(0xFF);
 }
 
 void device_execute(char command, int speed)
@@ -59,6 +64,7 @@ void Motor_Forward(int speed)
 {
     TIM2->CCR3 = speed; // PA2 (CH3): 속도 설정
     TIM2->CCR4 = 0;     // PA3 (CH4): Low
+    I2C_Write_GPIO()
 }
 
 void Motor_Reserve(int speed)
@@ -66,3 +72,4 @@ void Motor_Reserve(int speed)
     TIM2->CCR3 = 0;     // PA2 (CH3): Low
     TIM2->CCR4 = speed; // PA3 (CH4): 속도 설정
 }
+

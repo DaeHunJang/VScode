@@ -35,13 +35,33 @@ void Adc_Start(void)
 	Macro_Set_Bit(ADC1->CR2, 20); 					// EXT Trigger Start
 	Macro_Set_Bit(ADC1->CR2, 22); 					// ADC Start
 }
-
+void Cds_start(void)
+{
+	Macro_Set_Bit(ADC1->CR2, 20); 					// EXT Trigger Start
+	Macro_Set_Bit(ADC1->CR2, 22); 	
+}
+void Cds_Stop(void)
+{
+	Macro_Clear_Bit(ADC1->CR2, 22); 				// ADC Stop
+	Macro_Clear_Bit(ADC1->CR2, 0); 	
+}
 void Adc_Stop(void)
 {
 	Macro_Clear_Bit(ADC1->CR2, 22); 				// ADC Stop
 	Macro_Clear_Bit(ADC1->CR2, 0); 					// ADC OFF
 }
+int Cds_Get_Status(void)
+{
+	int r = Macro_Check_Bit_Set(ADC1->SR, 1);
 
+	if(r)
+	{
+		Macro_Clear_Bit(ADC1->SR, 1);
+		Macro_Clear_Bit(ADC1->SR, 4);
+	}
+
+	return r;
+}
 int Adc_Get_Status(void)
 {
 	int r = Macro_Check_Bit_Set(ADC1->SR, 1);
@@ -53,6 +73,10 @@ int Adc_Get_Status(void)
 	}
 
 	return r;
+}
+int Cdc_Get_Data(void)
+{
+	return Macro_Extract_Area(ADC1->DR, 0xFFF, 0);
 }
 
 int Adc_Get_Data(void)
