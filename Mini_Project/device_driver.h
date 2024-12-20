@@ -65,7 +65,7 @@ extern void TIM3_Out_Stop(void);
 // Moter.c
 
 void device_init();
-void device_execute(char recevied_command);
+void device_execute(char command, int speed);
 void Motor_Stop(void);
-void Motor_Forward(void);
-void Motor_Reserve(void);
+void Motor_Forward(int speed);
+void Motor_Reserve(int speed);
