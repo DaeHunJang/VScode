@@ -8,7 +8,8 @@ void device_init()
     Uart1_Init(115200);
     Uart1_RX_Interrupt_Enable(1);
     Clock_Init();
-
+    Key_Poll_Init();
+    Key_ISR_Enable(1);
     SCB->VTOR = 0x08003000;
     SCB->SHCSR = 0;
 
@@ -19,6 +20,7 @@ void device_init()
     TIM2->ARR = 100;                                   // 자동 리로드 값 (듀티 사이클 0~100%)
     TIM2->CCR3 = 0;                                    // 채널 3 (PA2) 듀티 사이클 초기화
     TIM2->CCR4 = 0;                                    // 채널 4 (PA3) 듀티 사이클 초기화
+    TIM2->CCMR2 &= ~((0x7 << 4) | (0x7 << 12));        // 기존 비트 클리어
     TIM2->CCMR2 |= (0x6 << 4) | (0x6 << 12); // CH3, CH4: PWM 모드 1
     TIM2->CCER |= (1 << 8) | (1 << 12);
     TIM2->CR1 |= (1 << 0); // TIM2 활성화
@@ -64,7 +66,6 @@ void Motor_Forward(int speed)
 {
     TIM2->CCR3 = speed; // PA2 (CH3): 속도 설정
     TIM2->CCR4 = 0;     // PA3 (CH4): Low
-    I2C_Write_GPIO()
 }
 
 void Motor_Reserve(int speed)
@@ -73,3 +74,9 @@ void Motor_Reserve(int speed)
     TIM2->CCR4 = speed; // PA3 (CH4): 속도 설정
 }
 
+void control_led_with_i2c(int speed)
+{
+    unsigned int led_data = ~(0xFFFFFFFF >> (speed / 10));
+    I2C_Write_GPIO(led_data);
+    Uart1_Printf("LED Data: 0x%08X\n", led_data);
+}

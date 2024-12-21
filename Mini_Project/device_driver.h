@@ -69,7 +69,7 @@ void device_execute(char command, int speed);
 void Motor_Stop(void);
 void Motor_Forward(int speed);
 void Motor_Reserve(int speed);
-
+void control_led_with_i2c(int speed);
 
 // i2c.c
 
